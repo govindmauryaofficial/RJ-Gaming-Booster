@@ -1,0 +1,30 @@
+workflows:
+  rj-gaming-booster-ios:
+    name: RJ Gaming Booster iOS (unsigned for GBox signing)
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      flutter: stable
+      xcode: latest
+    scripts:
+      - name: Generate iOS platform files
+        script: |
+          flutter create --platforms=ios --project-name rj_gaming_booster .
+      - name: Get Flutter packages
+        script: |
+          flutter pub get
+      - name: Build iOS app without Apple signing
+        script: |
+          flutter build ios --release --no-codesign
+      - name: Package app as unsigned IPA for external signing
+        script: |
+          mkdir -p build/ios/ipa/Payload
+          cp -R build/ios/iphoneos/Runner.app build/ios/ipa/Payload/Runner.app
+          cd build/ios/ipa
+          zip -r RJ-Gaming-Booster-unsigned.ipa Payload
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - build/ios/iphoneos/*.app
+    publishing:
+      email:
+        recipients: []
