@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'access_plans.dart';
 
 void main() => runApp(const RJGamingBoosterApp());
 
@@ -216,6 +217,7 @@ class _BoosterHomeState extends State<BoosterHome> with WidgetsBindingObserver {
           Text('BOOSTER', style: TextStyle(color: red, fontWeight: FontWeight.bold, fontSize: 10, letterSpacing: 3)),
         ]),
         actions: [
+          IconButton(tooltip: 'Access plans and admin', onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AccessPlansPage())), icon: const Icon(Icons.workspace_premium_outlined, color: red)),
           IconButton(tooltip: 'Clear ping history', onPressed: _clearHistory, icon: const Icon(Icons.delete_outline, color: muted)),
           const SizedBox(width: 8),
         ],
